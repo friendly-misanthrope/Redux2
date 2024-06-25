@@ -5,3 +5,10 @@ const initalSlice = [
   {id: '2', 'title': 'Slices...', content: "The more I say slice, the more I want pizza"}
 ]
 
+const postsSlice = createSlice({
+  name: 'posts',
+  initialState,
+  reducers: {}
+});
+
+export default postsSlice.reducer;
