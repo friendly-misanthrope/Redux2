@@ -6,14 +6,16 @@
 
 html {
   font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
-  background: #333;
-  color: whitesmoke;
+  /* background: #333;
+  color: whitesmoke; */
 }
 
 body {
   min-height: 100vh;
   font-size: 1.5rem;
   padding: 0 10% 10%;
+  background: #333;
+  color: whitesmoke;
 }
 
 input,
