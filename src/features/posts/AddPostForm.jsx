@@ -3,16 +3,16 @@ import { useDispatch } from "react-redux";
 import { postAdded } from "./postsSlice";
 
 const AddPostForm = () => {
-  const [title, setTitle] = useState('');
-  const [content, setContent] = useState('');
+  const [post, setPost] = useState({
+    title: '',
+    content: ''
+  });
+  const { title, content } = post;
+
   const dispatch = useDispatch();
 
-  const handleTitleChange = (e) => {
-    setTitle(e.target.value);
-  }
-
-  const handleContentChange = (e) => {
-    setContent(e.target.value);
+  const postChangeHandler = (e) => {
+    setPost(prevState => { return { ...prevState, [e.target.name]: e.target.value } });
   }
 
   const savePost = () => {
@@ -20,8 +20,10 @@ const AddPostForm = () => {
       dispatch(
         postAdded(title, content)
       );
-      setTitle('');
-      setContent('');
+      setPost({
+        title: '',
+        content: ''
+      });
     }
   }
 
@@ -35,7 +37,7 @@ const AddPostForm = () => {
           id="title"
           name="title"
           value={title}
-          onChange={handleTitleChange}
+          onChange={postChangeHandler}
         />
 
         <label htmlFor="content">Post Content:</label>
@@ -44,13 +46,13 @@ const AddPostForm = () => {
           id="content"
           name="content"
           value={content}
-          onChange={handleContentChange}
+          onChange={postChangeHandler}
         />
 
         <button type="button" onClick={savePost}>Save Post</button>
       </form>
     </section>
-  )
+  );
 }
 
-export default AddPostForm
+export default AddPostForm;
