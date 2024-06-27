@@ -1,11 +1,13 @@
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { postAdded } from "./postsSlice";
+import { selectAllUsers } from "../users/usersSlice";
 
 const AddPostForm = () => {
   const [post, setPost] = useState({
     title: '',
-    content: ''
+    content: '',
+    userId
   });
   const { title, content } = post;
 
@@ -22,7 +24,8 @@ const AddPostForm = () => {
       );
       setPost({
         title: '',
-        content: ''
+        content: '',
+        userId: ''
       });
     }
   }
