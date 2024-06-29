@@ -5,30 +5,39 @@ import { selectAllUsers } from "../users/usersSlice";
 
 const AddPostForm = () => {
   const [post, setPost] = useState({
-    title: '',
-    content: '',
-    userId
+    title: "",
+    content: "",
+    userId: "",
   });
-  const { title, content } = post;
 
+  const { title, content, userId } = post;
+  const users = useSelector(selectAllUsers);
   const dispatch = useDispatch();
 
   const postChangeHandler = (e) => {
-    setPost(prevState => { return { ...prevState, [e.target.name]: e.target.value } });
-  }
+    setPost((prevState) => {
+      return { ...prevState, [e.target.name]: e.target.value };
+    });
+  };
 
   const savePost = () => {
     if (title && content) {
-      dispatch(
-        postAdded(title, content)
-      );
+      dispatch(postAdded(title, content, userId));
       setPost({
-        title: '',
-        content: '',
-        userId: ''
+        title: "",
+        content: "",
+        userId: "",
       });
     }
   }
+
+  const usersOptions = users.map((user) => (
+    <option key={user.id} value={user.id}>
+      {user.name}
+    </option>
+  ));
+
+  const postIsValid = Boolean(title) && Boolean(content) && Boolean(userId)
 
   return (
     <section>
@@ -43,6 +52,12 @@ const AddPostForm = () => {
           onChange={postChangeHandler}
         />
 
+        <label htmlFor="userId"></label>
+        <select value={userId} name="userId" onChange={postChangeHandler}>
+          <option value=""></option>
+          {usersOptions}
+        </select>
+
         <label htmlFor="content">Post Content:</label>
         <input
           type="text"
@@ -52,7 +67,9 @@ const AddPostForm = () => {
           onChange={postChangeHandler}
         />
 
-        <button type="button" onClick={savePost}>Save Post</button>
+        <button type="button" onClick={savePost} disabled={!postIsValid}>
+          Save Post
+        </button>
       </form>
     </section>
   );
